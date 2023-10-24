@@ -62,22 +62,37 @@ for utterance_object in data:
     speaker_word_count = len(text.split())
     speakers_and_word_counts[speaker] += speaker_word_count
 
-print(speakers_and_word_counts)
-
 speaker_labels = speakers_and_word_counts.keys()
 word_count_labels = speakers_and_word_counts.values()
+
+colors = [
+    "#F15B1C",
+    "#00000F",
+    "#FFFFFF",
+    "#4C85C5"
+]
+
+fig, ax = plt.subplots()
 
 df = pd.DataFrame({
     'labels': speaker_labels,
     'values': word_count_labels
 })
 
-ax = df.plot.barh(
+df.plot(
+    kind = "barh",
     x = 'labels',
     y = 'values',
-    title = 'NPR Up First 10/19/2023',
-    xlabel = 'Word Count of Speaker',
-    ylabel = 'Type of Speaker'
+    ax = ax,
+    title = "NPR's 10/19/2023 Episode of Up First, Broken Down by the Word Counts of Various Types of Speakers",
+    xlabel = 'Word Count',
+    ylabel = 'Type of Speaker',
+    color = colors,
+    edgecolor = "black"
 )
+
+ax.grid(axis='x')
+
+ax.get_legend().remove()
 
 plt.show()
